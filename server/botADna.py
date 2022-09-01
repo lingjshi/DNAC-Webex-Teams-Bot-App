@@ -32,6 +32,7 @@ import api
 import dnacapi
 import json
 import time
+import os
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 
@@ -51,7 +52,26 @@ apiObj = None
 """
 ******************  SPARK API - GET , POST , POST IMAGE ****************************
 """
+def createWebhook():
+    """
+    Method to create a webhook
+    """
 
+    headers = {"Accept": "application/json",
+               "Content-Type": "application/json",
+               "Authorization": "Bearer " + bearer}
+
+    data = {
+        "name":"cewebhook",
+        "targetUrl": bot_url,
+        "resource": "messages",
+        "event": "created"
+    }
+
+    contents = requests.post('https://webexapis.com/v1/webhooks', json.dumps(data),
+                               headers=headers)
+
+    return contents
 
 def sendSparkGET(url):
     """
@@ -480,6 +500,7 @@ def drawBarChart(networkHealth,clientHealth,filename):
 
 
 if __name__ == '__main__':
+    createWebhook()
     app.run(host='0.0.0.0', port=10010, debug=True)
 
 
