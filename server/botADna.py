@@ -26,7 +26,7 @@ import requests
 from flask import request
 import sys
 # import matplotlib.pyplot as plt
-import numpy as np
+# import numpy as np
 
 import api
 import dnacapi
@@ -41,7 +41,7 @@ app = Flask(__name__, static_folder='../static/dist', template_folder='../static
 '''
 Set the bearer token, email ,name etc
 '''
-bearer = os.getenv("TEAMS_BOT_TOKEN")
+bearer = os.getenv("TEAMS_BOT_TOKEN", "OWIxZTFmZmQtOWRlMi00MTRhLWJhOTQtZTVkODg4N2UzNzQ3NzU5MGU4NTQtNjhl_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f")
 bot_email = os.getenv("TEAMS_BOT_EMAIL", "codeexchange@webex.bot")
 bot_url = os.getenv("DEVENV_APP_9082_URL")
 bot_name = os.getenv("TEAMS_BOT_APP_NAME", "codeexchange")
@@ -135,7 +135,6 @@ def index():
     using the sendSparkGet() function.  The message text is parsed.  If an expected command is found in the message,
     further actions are taken.
     """
-
     webhook = json.loads(request.data.decode("utf-8"))
     result = sendSparkGET('https://api.ciscospark.com/v1/messages/{0}'.format(webhook['data']['id']))
     result = json.loads(result.text)
