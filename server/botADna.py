@@ -25,7 +25,7 @@ from flask import Flask, render_template
 import requests
 from flask import request
 import sys
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 
 import api
@@ -41,9 +41,10 @@ app = Flask(__name__, static_folder='../static/dist', template_folder='../static
 '''
 Set the bearer token, email ,name etc
 '''
-bearer = "Yj...."
-bot_email = 'bot...@sparkbot.io'
-bot_name = "bot...."
+bearer = os.getenv("TEAMS_BOT_TOKEN")
+bot_email = os.getenv("TEAMS_BOT_EMAIL", "codeexchange@webex.bot")
+bot_url = os.getenv("DEVENV_APP_9082_URL")
+bot_name = os.getenv("TEAMS_BOT_APP_NAME", "codeexchange")
 line_separator = "\n******************************************************************************************\n"
 
 #Global API Object
@@ -176,13 +177,13 @@ def processMessage(in_message, webhook):
     elif 'device' in in_message:
         handleNetworkDevice(in_message, webhook)
 
-    # Site Health Detail
-    elif 'site-health-detail' in in_message:
-        handleSiteHierarchy(webhook,True)
+#     # Site Health Detail
+#     elif 'site-health-detail' in in_message:
+#         handleSiteHierarchy(webhook,True)
 
-    #site Health Summary
-    elif 'site-health-summary' in in_message:
-        handleSiteHierarchy(webhook,False)
+#     #site Health Summary
+#     elif 'site-health-summary' in in_message:
+#         handleSiteHierarchy(webhook,False)
 
     # Help
     elif 'help' in in_message:
@@ -349,46 +350,46 @@ def handleNetworkDevice(in_message, webhook):
         sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
 
 
-def handleSiteHierarchy(webhook,detail):
-    if validateConnection():
-        waitMessage = 'Please wait while I fetch the data   ' + u"\U0001F557"
-        sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                      {"roomId": webhook['data']['roomId'], "text": str(waitMessage)})
+# def handleSiteHierarchy(webhook,detail):
+#     if validateConnection():
+#         waitMessage = 'Please wait while I fetch the data   ' + u"\U0001F557"
+#         sendSparkPOST("https://api.ciscospark.com/v1/messages",
+#                       {"roomId": webhook['data']['roomId'], "text": str(waitMessage)})
 
-        #reducing time by 15 minutes for client health to show up
-        timestamp = int(round(time.time() * 1000)-(15*60*1000))
-        siteHierarchy = dnacapi.getSiteHierarchy(timestamp,apiObj)
+#         #reducing time by 15 minutes for client health to show up
+#         timestamp = int(round(time.time() * 1000)-(15*60*1000))
+#         siteHierarchy = dnacapi.getSiteHierarchy(timestamp,apiObj)
 
-        if siteHierarchy is not None:
-            data= "Here is the Site Health for all your sites:"+ line_separator
-            for site in siteHierarchy:
-                if detail is True:
-                    data = data + "Site Name: "+ site.name +"\n"
-                    data = data + "Network Health: " + str(site.networkHealth) + "\n"
-                    data = data + "Client Health: " + str(site.clienthealth) + "\n"
-                    data = data + "Healthy Device Count: " + str(site.healthyDevCount) + "\n"
-                    data = data + "Total Device Count: " + str(site.totalDevCount) + "\n\n"
+#         if siteHierarchy is not None:
+#             data= "Here is the Site Health for all your sites:"+ line_separator
+#             for site in siteHierarchy:
+#                 if detail is True:
+#                     data = data + "Site Name: "+ site.name +"\n"
+#                     data = data + "Network Health: " + str(site.networkHealth) + "\n"
+#                     data = data + "Client Health: " + str(site.clienthealth) + "\n"
+#                     data = data + "Healthy Device Count: " + str(site.healthyDevCount) + "\n"
+#                     data = data + "Total Device Count: " + str(site.totalDevCount) + "\n\n"
 
-                if detail is False:
-                    if 'All Sites' in site.name:
-                        filename='devicehealth.png'
-                        drawDonut(site.healthyDevCount,(site.totalDevCount-site.healthyDevCount),filename)
-                        postImageToSpark(webhook, filename, 'Overall Device Health for all Sites')
+#                 if detail is False:
+#                     if 'All Sites' in site.name:
+#                         filename='devicehealth.png'
+#                         drawDonut(site.healthyDevCount,(site.totalDevCount-site.healthyDevCount),filename)
+#                         postImageToSpark(webhook, filename, 'Overall Device Health for all Sites')
 
-                        drawBarChart(site.networkHealth, site.clienthealth, filename)
-                        postImageToSpark(webhook, filename, 'Overall Device Health for all Sites')
+#                         drawBarChart(site.networkHealth, site.clienthealth, filename)
+#                         postImageToSpark(webhook, filename, 'Overall Device Health for all Sites')
 
-            if detail is True:
-                sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                                  {"roomId": webhook['data']['roomId'], "text": data})
+#             if detail is True:
+#                 sendSparkPOST("https://api.ciscospark.com/v1/messages",
+#                                   {"roomId": webhook['data']['roomId'], "text": data})
 
-        else:
-            data = 'Sorry! I am having some trouble now.Can you try again or try a different command?'
-            sendSparkPOST("https://api.ciscospark.com/v1/messages",
-                          {"roomId": webhook['data']['roomId'], "text": data})
-    else:
-        msg = "Not connected to any cluster, please connect and try again."
-        sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
+#         else:
+#             data = 'Sorry! I am having some trouble now.Can you try again or try a different command?'
+#             sendSparkPOST("https://api.ciscospark.com/v1/messages",
+#                           {"roomId": webhook['data']['roomId'], "text": data})
+#     else:
+#         msg = "Not connected to any cluster, please connect and try again."
+#         sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
 
 
 def handleListDevices(webhook):
@@ -439,64 +440,64 @@ def handleLogout(webhook):
     sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "markdown": msg})
 
 
-def drawDonut(healthy,unhealthy,filename):
-    labels = 'Healthy Device(s):'+str(healthy), 'Unhealthy Device(s):'+str(unhealthy)
-    sizes = [healthy,unhealthy]
-    colors = ['green', 'orange']
-    explode = (0, 0)  # explode a slice if required
+# def drawDonut(healthy,unhealthy,filename):
+#     labels = 'Healthy Device(s):'+str(healthy), 'Unhealthy Device(s):'+str(unhealthy)
+#     sizes = [healthy,unhealthy]
+#     colors = ['green', 'orange']
+#     explode = (0, 0)  # explode a slice if required
 
-    plt.pie(sizes, explode=explode, labels=labels, colors=colors, shadow=True)
+#     plt.pie(sizes, explode=explode, labels=labels, colors=colors, shadow=True)
 
-    # draw a circle at the center of pie to make it look like a donut
-    centre_circle = plt.Circle((0, 0), 0.75, color='black', fc='white', linewidth=1.25)
-    fig = plt.gcf()
-    fig.gca().add_artist(centre_circle)
+#     # draw a circle at the center of pie to make it look like a donut
+#     centre_circle = plt.Circle((0, 0), 0.75, color='black', fc='white', linewidth=1.25)
+#     fig = plt.gcf()
+#     fig.gca().add_artist(centre_circle)
 
-    # Set aspect ratio to be equal so that pie is drawn as a circle.
-    plt.axis('equal')
-    plt.title('Overall Device Health')
-    plt.savefig(filename)
+#     # Set aspect ratio to be equal so that pie is drawn as a circle.
+#     plt.axis('equal')
+#     plt.title('Overall Device Health')
+#     plt.savefig(filename)
 
 
-def drawBarChart(networkHealth,clientHealth,filename):
-    # Fixing random state for reproducibility
-    np.random.seed(19680801)
+# def drawBarChart(networkHealth,clientHealth,filename):
+#     # Fixing random state for reproducibility
+#     np.random.seed(19680801)
 
-    plt.rcdefaults()
-    fig, ax = plt.subplots(figsize=(10, 6))
+#     plt.rcdefaults()
+#     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Example data
-    people = ('Network', 'Client')
-    y_pos = np.arange(len(people))
-    # networkHealth = 20
-    # clientHealth = 95
+#     # Example data
+#     people = ('Network', 'Client')
+#     y_pos = np.arange(len(people))
+#     # networkHealth = 20
+#     # clientHealth = 95
 
-    if networkHealth > 60:
-        networkColor = 'green'
-    elif networkHealth > 30:
-        networkColor = 'goldenrod'
-    else:
-        networkColor = 'red'
+#     if networkHealth > 60:
+#         networkColor = 'green'
+#     elif networkHealth > 30:
+#         networkColor = 'goldenrod'
+#     else:
+#         networkColor = 'red'
 
-    if clientHealth > 60:
-        clientColor = 'green'
-    elif clientHealth > 30:
-        clientColor = 'goldenrod'
-    else:
-        clientColor = 'red'
+#     if clientHealth > 60:
+#         clientColor = 'green'
+#     elif clientHealth > 30:
+#         clientColor = 'goldenrod'
+#     else:
+#         clientColor = 'red'
 
-    performance = (networkHealth, clientHealth)
-    error = np.random.rand(len(people))
+#     performance = (networkHealth, clientHealth)
+#     error = np.random.rand(len(people))
 
-    ax.barh(y_pos, performance, xerr=error, align='center',
-            color=(networkColor, clientColor), ecolor='black', height=0.2)
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels(people)
-    ax.invert_yaxis()  # labels read top-to-bottom
-    ax.set_xlabel('Health(%)')
-    ax.set_title('Overall Site Health')
+#     ax.barh(y_pos, performance, xerr=error, align='center',
+#             color=(networkColor, clientColor), ecolor='black', height=0.2)
+#     ax.set_yticks(y_pos)
+#     ax.set_yticklabels(people)
+#     ax.invert_yaxis()  # labels read top-to-bottom
+#     ax.set_xlabel('Health(%)')
+#     ax.set_title('Overall Site Health')
 
-    plt.savefig(filename)
+#     plt.savefig(filename)
 
 
 if __name__ == '__main__':
