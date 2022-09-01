@@ -108,16 +108,12 @@ python3 botADna.py
 		Greets the user and says what next could he do to connect to a cluster to start seeing his network data
 	##### connect,`<ip>`,`<username>`,`<password>`
 		To connect to a cluster to see its data
-	##### site-health-summary
-		Get a simple site health chart of Healthy vs. Unhealthy Devices and Client ,Network Health Charts
-	##### site-health-detail
-		Get a detailed info per site on the healthy clients, healthy devices etc.
 	##### list-devices
-		Get a list of network devices - Name and MAC Address
-	##### device `<deviceName>`
-		Get latest detailed information about one device
-	##### client `<MAC Address>`
-		Get latest detailed information about a client
+		Lists Devices on the network
+	##### device-by-id <DEVICE ID>
+		Current information about a network device by device ID.
+	##### device-by-mac <DEVICE ID>
+		Current information about a network device by device MAC address
 	##### help
 		Get the list of commands supported
 	##### logout
@@ -127,11 +123,9 @@ python3 botADna.py
 
 APIs used in this code:
 
-##### Site Hierarchy
-	GET /dna/intent/api/v1/site-hierarchy?timestamp=1527103419000  header:{'__runsync': 'true'}
-##### Network Device Detail 
-	GET /dna/intent/api/v1/network-device-detail?timestamp=1527103419000&searchBy=Starbucks-AP1&identifier=nwDeviceName  header:{'__runsync': 'true'}
+##### Network Device Detail By Device ID
+	GET /dna/intent/api/v1/network-device/{Device ID}
+##### Network Device Detail By MAC Address
+	GET /dna/intent/api/v1/device-detail?searchBy={MAC Address}&identifier=macAddress
 ##### Network Device List 
 	GET /api/v1/network-device  
-##### Client Detail 
-	GET /dna/intent/api/v1/client-detail?timestamp=1527103419000&macAddress=11:22:33:44:55:11 header:{'__runsync': 'true'}
