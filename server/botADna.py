@@ -405,6 +405,7 @@ def handleListDevices(webhook):
             data= "Here is the list of devices on your network:"+ line_separator
             for device in deviceList:
                 data = data + "Name: "+ device.name+"\n"
+                data = data + "Device ID: "+ device.id+"\n"
                 data = data + "MAC Address: " + device.macAddress.upper() + "\n\n"
 
             sendSparkPOST("https://api.ciscospark.com/v1/messages",
