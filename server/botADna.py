@@ -172,9 +172,13 @@ def processMessage(in_message, webhook):
     elif 'client' in in_message:
         handleClient(in_message, webhook)
 
-    #Handle Device detail
-    elif 'device' in in_message:
-        handleNetworkDevice(in_message, webhook)
+    # Handle Device detail by ID
+    elif 'device-by-mac' in in_message:
+        handleDeviceByMACAddr(in_message, webhook)
+
+    # Handle Device detail by ID
+    elif 'device-by-id' in in_message:
+        handleDeviceByID(in_message, webhook)
 
 #     # Site Health Detail
 #     elif 'site-health-detail' in in_message:
@@ -225,14 +229,12 @@ def handleConnection(in_message, webhook):
         msg = "**Connected Successfully!**\t\t"+ u"\u2713"
         sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "markdown": msg})
         msg =       "Please try the commands to chat with me"+ line_separator
-        msg = msg + "1. connect,<IP>,<UI-Username>,<UI-Password>       Connect to a cluster\n"
-        msg = msg + "2. client <MAC ADDRESS>                                              Current information about a client\n"
-        msg = msg + "3. device <DEVICE NAME>                                              Current information about a network device\n"
-        msg = msg + "4. site-health-summary                                                   Healthy Unhealthy devices in a network\n"
-        msg = msg + "5. site-health-detail                                                          Detailed health information per Site\n"
-        msg = msg + "6. list-devices                                                                     Lists Devices on the network\n"
-        msg = msg + "7. help                                                                                 Detailed health information per Site\n"
-        msg = msg + "8. logout                                                                              Disconnect current connection to cluster\n"
+        msg = msg + "1. connect,<IP>,<UI-Username>,<UI-Password>         Connect to a cluster\n"
+        msg = msg + "2. list-devices                                                                      Lists Devices on the network\n"
+        msg = msg + "3. device-by-id <DEVICE ID>                                            Current information about a network device by device ID\n"
+        msg = msg + "4. device-by-mac <DEVICE ID>                                        Current information about a network device by device MAC address\n"
+        msg = msg + "7. help                                                                                    Detailed health information per Site\n"
+        msg = msg + "8. logout                                                                                Disconnect current connection to cluster\n"
     else:
         msg = "Cluster credentials incorrect/ Unable to authenticate.Please try again"
     sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
@@ -416,18 +418,112 @@ def handleListDevices(webhook):
         msg = "Not connected to any cluster, please connect and try again."
         sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
 
+def handleDeviceByMACAddr(in_message, webhook):
+    """
+    Method to get the device detail based on a device MAC Address
+    :param in_message:
+    :param webhook:
+    :return:
+    """
+    if validateConnection():
 
+        cmd, macaddr = in_message.split(" ")
+
+        # Send a wait message
+        waitMessage = 'Please wait while I fetch the data   ' + u"\U0001F557"
+        sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                      {"roomId": webhook['data']['roomId'], "text": str(waitMessage)})
+
+        # get device details for device ID from API
+
+        deviceData = dnacapi.getDeviceDetailbyMacAddr(macaddr,apiObj)
+
+        # Create an image with the text from output- Jinja
+        if deviceData is not None:
+            context = {
+                'name': deviceData.name,
+                'deviceId': deviceData.nwDeviceId,
+                'ip': deviceData.ip,
+                'platformId': deviceData.platformId,
+                'deviceSeries': deviceData.series,
+                'status': deviceData.reachabilityStatus
+            }
+
+            msg = "**Device Details** (**MAC Address**: {0}) ".format(macaddr) + line_separator
+            msg = msg + "**Name:** {0}\n".format(context['name'])
+            msg = msg + "**Device ID:** {0}\n".format(context['deviceId'])
+            msg = msg + "**IP:** {0}\n".format(context['ip'])
+            msg = msg + "**Platform ID:** {0}\n".format(context['platformId'])
+            msg = msg + "**Series:** {0}\n".format(context['deviceSeries'])
+            msg = msg + "**Status:** {0}\n".format(context['status'])
+
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "markdown": msg})
+        else:
+            data = 'I cannot find this client on the network.Can you try a different MAC?'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "text": data})
+    else:
+        msg = "Not connected to any cluster, please connect and try again."
+        sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
+
+
+def handleDeviceByID(in_message, webhook):
+    """
+    Method to get the device detail based on a device ID
+    :param in_message:
+    :param webhook:
+    :return:
+    """
+    if validateConnection():
+
+        cmd, deviceid = in_message.split(" ")
+
+        # Send a wait message
+        waitMessage = 'Please wait while I fetch the data   ' + u"\U0001F557"
+        sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                      {"roomId": webhook['data']['roomId'], "text": str(waitMessage)})
+
+        # get device details for device ID from API
+
+        deviceData = dnacapi.getDeviceDetailbyID(deviceid,apiObj)
+
+        # Create an image with the text from output- Jinja
+        if deviceData is not None:
+            context = {
+                'name': deviceData.name,
+                'macAddress': deviceData.macAddress,
+                'ip': deviceData.ip,
+                'platformId': deviceData.platformId,
+                'upTime': deviceData.upTime,
+                'status': deviceData.reachabilityStatus
+            }
+
+            msg = "**Device Details** (**ID**: {0}) ".format(deviceid) + line_separator
+            msg = msg + "**Name:** {0}\n".format(context['name'])
+            msg = msg + "**Mac Address:** {0}\n".format(context['macAddress'])
+            msg = msg + "**IP:** {0}\n".format(context['ip'])
+            msg = msg + "**Platform ID:** {0}\n".format(context['platformId'])
+            msg = msg + "**Up Time:** {0}\n".format(context['upTime'])
+            msg = msg + "**Status:** {0}\n".format(context['status'])
+
+            sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "markdown": msg})
+        else:
+            data = 'I cannot find this client on the network.Can you try a different MAC?'
+            sendSparkPOST("https://api.ciscospark.com/v1/messages",
+                          {"roomId": webhook['data']['roomId'], "text": data})
+    else:
+        msg = "Not connected to any cluster, please connect and try again."
+        sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
+        
 def handleHelp(webhook):
 
     msg = "Please try the commands to chat with me" + line_separator
-    msg = msg + "1. connect,<IP>,<UI-Username>,<UI-Password>       Connect to a cluster\n"
-    msg = msg + "2. client <MAC ADDRESS>                                              Current information about a client\n"
-    msg = msg + "3. device <DEVICE NAME>                                              Current information about a network device\n"
-    msg = msg + "4. site-health-summary                                                   Healthy Unhealthy devices in a network\n"
-    msg = msg + "5. site-health-detail                                                          Detailed health information per Site\n"
-    msg = msg + "6. list-devices                                                                     Lists Devices on the network\n"
-    msg = msg + "7. help                                                                                 Detailed health information per Site\n"
-    msg = msg + "8. logout                                                                              Disconnect current connection to cluster\n"
+    msg = msg + "1. connect,<IP>,<UI-Username>,<UI-Password>         Connect to a cluster\n"
+    msg = msg + "2. list-devices                                                                      Lists Devices on the network\n"
+    msg = msg + "3. device-by-id <DEVICE ID>                                            Current information about a network device by device ID\n"
+    msg = msg + "4. device-by-mac <DEVICE ID>                                        Current information about a network device by device MAC address\n"
+    msg = msg + "7. help                                                                                    Detailed health information per Site\n"
+    msg = msg + "8. logout                                                                                Disconnect current connection to cluster\n"
 
     sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": msg})
 
