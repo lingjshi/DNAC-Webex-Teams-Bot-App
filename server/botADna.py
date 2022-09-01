@@ -41,7 +41,7 @@ app = Flask(__name__, static_folder='../static/dist', template_folder='../static
 '''
 Set the bearer token, email ,name etc
 '''
-bearer = os.getenv("TEAMS_BOT_TOKEN", "OWIxZTFmZmQtOWRlMi00MTRhLWJhOTQtZTVkODg4N2UzNzQ3NzU5MGU4NTQtNjhl_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f")
+bearer = os.getenv("TEAMS_BOT_TOKEN", "OTJlMWY5YzgtNmFhOC00YmVmLTgwMGQtOWRmMGFhNjBkN2FlODMwNTljMTEtYTg1_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f")
 bot_email = os.getenv("TEAMS_BOT_EMAIL", "codeexchange@webex.bot")
 bot_url = os.getenv("DEVENV_APP_9082_URL")
 bot_name = os.getenv("TEAMS_BOT_APP_NAME", "codeexchange")
