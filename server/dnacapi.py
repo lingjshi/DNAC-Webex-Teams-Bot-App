@@ -42,6 +42,46 @@ def getClientDetail(timestamp,macAddr,apiObj):
 
     return clientDetail;
 
+def getDeviceDetailbyID(id,apiObj):
+    networkDevDetail=None;
+    if apiObj is not None:
+        path = "/dna/intent/api/v1/network-device/" + id
+        headers = {'__runsync': 'true'}
+
+        #todo Change to GET after hotfix is released
+        deviceJson = apiObj.get(path, headers);
+
+        if 'response' in deviceJson:
+            resp = deviceJson['response']
+            networkDevDetail = DnacNetworkDeviceClass(resp['hostname'], resp['managementIpAddress'],
+                                                      resp['platformId'], resp['id'], resp['upTime'],
+                                                      resp['role'], resp['family'],
+                                                      resp['macAddress'], resp['softwareVersion'],
+                                                      resp['type'], resp['reachabilityStatus'],
+                                                      resp['series'])
+    return networkDevDetail;
+
+def getDeviceDetailbyMacAddr(macaddr,apiObj):
+    networkDevDetail=None;
+    if apiObj is not None:
+        path = "/dna/intent/api/v1/device-detail?"
+        query = "searchBy=" + macaddr + "&identifier=macAddress"
+        headers = {'__runsync': 'true'}
+
+        #todo Change to GET after hotfix is released
+        deviceJson = apiObj.get(path+query, headers);
+
+        if 'response' in deviceJson:
+            resp = deviceJson['response']
+            networkDevDetail = DnacNetworkDeviceClass(resp['nwDeviceName'], resp['managementIpAddr'],
+                                                      resp['platformId'], resp['nwDeviceId'], resp['lastBootTime'],
+                                                      resp['nwDeviceRole'], resp['nwDeviceFamily'],
+                                                      resp['macAddress'], resp['softwareVersion'],
+                                                      resp['nwDeviceType'], resp['communicationState'],
+                                                      resp['deviceSeries'])
+    return networkDevDetail;
+  
+  
 def getSiteHierarchy(timestamp,apiObj):
     #timestamp=1527103419000&searchBy=Starbucks-AP1&identifier=nwDeviceName
 
