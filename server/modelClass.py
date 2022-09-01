@@ -34,7 +34,7 @@ class DnacClientClass(object):
 class DnacNetworkDeviceClass(object):
     def __init__(self, name, ip, platformId, nwDeviceId, sysUptime
                  , nwDeviceRole, nwDeviceFamily, macAddress, softwareVersion,
-                 nwDeviceType, overallHealth, memoryScore, cpuScore):
+                 nwDeviceType, reachabilityStatus, series):
         self.name = name
         self.ip = ip
         self.platformId = platformId
@@ -45,9 +45,8 @@ class DnacNetworkDeviceClass(object):
         self.macAddress = macAddress
         self.softwareVersion = softwareVersion
         self.nwDeviceType = nwDeviceType
-        self.overallHealth = overallHealth
-        self.memoryScore = memoryScore
-        self.cpuScore = cpuScore
+        self.reachabilityStatus = reachabilityStatus
+        self.series = series
     def __str__(self):
         return '\n'.join(
             ('{} = {}'.format(item, self.__dict__[item]) for item in self.__dict__))
