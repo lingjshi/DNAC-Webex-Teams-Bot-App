@@ -597,6 +597,6 @@ def handleLogout(webhook):
 
 if __name__ == '__main__':
     createWebhook()
-    app.run(host='0.0.0.0', port=10010, debug=True)
+    app.run(host='0.0.0.0', port=9082, debug=True)
 
 
