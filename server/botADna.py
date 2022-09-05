@@ -231,8 +231,8 @@ def handleConnection(in_message, webhook):
         msg =       "Please try the commands to chat with me"+ line_separator
         msg = msg + "1. connect,<IP>,<UI-Username>,<UI-Password>         Connect to a cluster\n"
         msg = msg + "2. list-devices                                                                      Lists Devices on the network\n"
-        msg = msg + "3. device-by-id <DEVICE ID>                                            Current information about a network device by device ID\n"
-        msg = msg + "4. device-by-mac <DEVICE ID>                                        Current information about a network device by device MAC address\n"
+        msg = msg + "3. device-by-id <DEVICE ID>                                            Current information about a network device by ID\n"
+        msg = msg + "4. device-by-mac <MAC Address>                                      Current information about a network device by MAC address\n"
         msg = msg + "7. help                                                                                    Detailed health information per Site\n"
         msg = msg + "8. logout                                                                                Disconnect current connection to cluster\n"
     else:
@@ -521,8 +521,8 @@ def handleHelp(webhook):
     msg = "Please try the commands to chat with me" + line_separator
     msg = msg + "1. connect,<IP>,<UI-Username>,<UI-Password>         Connect to a cluster\n"
     msg = msg + "2. list-devices                                                                      Lists Devices on the network\n"
-    msg = msg + "3. device-by-id <DEVICE ID>                                            Current information about a network device by device ID\n"
-    msg = msg + "4. device-by-mac <DEVICE ID>                                        Current information about a network device by device MAC address\n"
+    msg = msg + "3. device-by-id <DEVICE ID>                                            Current information about a network device by ID\n"
+    msg = msg + "4. device-by-mac <MAC Address>                                      Current information about a network device by MAC address\n"
     msg = msg + "7. help                                                                                    Detailed health information per Site\n"
     msg = msg + "8. logout                                                                                Disconnect current connection to cluster\n"
 
