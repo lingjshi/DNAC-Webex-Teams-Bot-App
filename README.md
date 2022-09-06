@@ -80,15 +80,7 @@ source venv/bin/activate
 #### 3.Setup the dependencies
 
 ```
-pip3 install -r requirements.txt
-```
-
-#### 4.Configure the Bot Bearer Token, Bot email etc on the ./server/botADna.py
-
-```
-bearer = "YjExN......."
-bot_email = 'bot-my-email@sparkbot.io'
-bot_name = "bot-my-name"
+pip install -r requirements.txt
 ```
 
 #### 4.Run the application using python3 to start the server
@@ -112,7 +104,7 @@ python3 botADna.py
 		Lists Devices on the network
 	##### device-by-id <DEVICE ID>
 		Current information about a network device by device ID.
-	##### device-by-mac <DEVICE ID>
+	##### device-by-mac <MAC Address>
 		Current information about a network device by device MAC address
 	##### help
 		Get the list of commands supported
