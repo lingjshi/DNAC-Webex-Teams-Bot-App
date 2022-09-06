@@ -87,7 +87,7 @@ pip install -r requirements.txt
 
 ```
 cd server
-python3 botADna.py
+python botADna.py
 ```
 
 
@@ -102,9 +102,9 @@ python3 botADna.py
 		To connect to a cluster to see its data
 	##### list-devices
 		Lists Devices on the network
-	##### device-by-id <DEVICE ID>
+	##### device-by-id `<DEVICE ID>`
 		Current information about a network device by device ID.
-	##### device-by-mac <MAC Address>
+	##### device-by-mac `<MAC Address>`
 		Current information about a network device by device MAC address
 	##### help
 		Get the list of commands supported
