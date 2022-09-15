@@ -62,22 +62,13 @@ You’ll need to know the ‘roomId’ of the room the bot is hanging out in, an
 	}
 ```
 
-## Running the Code
+## Running the Code in VSCode
 
-#### 1.Clone the code
+#### 1.Open the VSCode DevEnv
 
-```
-git clone https://github3.cisco.com/amthyaga/app-dev-dnac-sparkbot.git
-```
+This code has been cloned in VSCode automatically.
 
-#### 2.Create a Python Virtual Environment
-
-```
-python3 -m venv venv
-source venv/bin/activate
-```
-
-#### 3.Setup the dependencies
+#### 3.Setup the dependencies in the terminal
 
 ```
 pip install -r requirements.txt
@@ -91,10 +82,9 @@ python botADna.py
 ```
 
 
-# Let's Chat
+# Let's Chat in the Webex Bot (codeexchange@webex.bot)
 
-1. Look for your chatroom/Bot in WebEx-Teams
-2. Common commands:
+1. Common commands:
 	
 	##### hello
 		Greets the user and says what next could he do to connect to a cluster to start seeing his network data
