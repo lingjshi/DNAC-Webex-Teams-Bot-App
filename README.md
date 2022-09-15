@@ -84,22 +84,22 @@ python botADna.py
 
 # Let's Chat in the Webex Bot (codeexchange@webex.bot)
 
-1. Common commands:
+Common commands:
 	
-	##### hello
-		Greets the user and says what next could he do to connect to a cluster to start seeing his network data
-	##### connect,`<ip>`,`<username>`,`<password>`
-		To connect to a cluster to see its data
-	##### list-devices
-		Lists Devices on the network
-	##### device-by-id `<DEVICE ID>`
-		Current information about a network device by device ID.
-	##### device-by-mac `<MAC Address>`
-		Current information about a network device by device MAC address
-	##### help
-		Get the list of commands supported
-	##### logout
-		Logout of the cluster connection. Need to login again to run the commands
+##### hello
+	Greets the user and says what next could he do to connect to a cluster to start seeing his network data
+##### connect,`<ip>`,`<username>`,`<password>`
+	To connect to a cluster to see its data
+##### list-devices
+	Lists Devices on the network
+##### device-by-id `<DEVICE ID>`
+	Current information about a network device by device ID.
+##### device-by-mac `<MAC Address>`
+	Current information about a network device by device MAC address
+##### help
+	Get the list of commands supported
+##### logout
+	Logout of the cluster connection. Need to login again to run the commands
 
 # API Information
 
