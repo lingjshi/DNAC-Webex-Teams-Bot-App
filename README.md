@@ -68,13 +68,13 @@ You’ll need to know the ‘roomId’ of the room the bot is hanging out in, an
 
 This code has been cloned in VSCode automatically.
 
-#### 3.Setup the dependencies in the terminal
+#### 2.Setup the dependencies in the terminal
 
 ```
 pip install -r requirements.txt
 ```
 
-#### 4.Run the application using python3 to start the server
+#### 3.Run the application using python3 to start the server
 
 ```
 cd server
