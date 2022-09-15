@@ -209,7 +209,7 @@ def handleGreeting(in_message, webhook):
     :return:
     """
     greeting = line_separator + "\tHello! I'm your bot-a-dna!\t" + u"\U0001F44B" + line_separator
-    connect="Key in your IP ,Username & Password to connect. Example: **Connect,10.0.0.0,admin,Password123**"
+    connect="Key in your IP ,Username & Password to connect. Example: **connect,sandboxdnac2.cisco.com,devnetuser,Cisco123!**"
 
     sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "text": greeting})
     sendSparkPOST("https://api.ciscospark.com/v1/messages", {"roomId": webhook['data']['roomId'], "markdown": connect})
