@@ -30,7 +30,7 @@ Bot Username is the email address, since every Spark user is registered under an
 
 Once the bot is created, you’ll need to save the access token that is provided – keep it someplace safe.  The token effectively never expires (it’s good for 100 years) but if you forget it, you’ll have to generate a new one. There’s no way to get it back.
 
-#### 2: Create an Outbound Webhook
+#### 2.Create an Outbound Webhook
 
 Your webhook URL needs to be accessible on the public Internet – if you want to use your local machine, you can use a service like Ngrok to make your personal machine accessible to the world on a specific port for free.
 
