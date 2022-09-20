@@ -10,15 +10,15 @@ The Bot provides a chat like interface to give visibility into your network to r
 ![Alt text](https://github.com/lingjshi/DNAC-Webex-Teams-Bot-App/blob/master/server/sampleScreen.png?raw=true "Sample Chat Session")
 
 
-# Making the App work
+## Making the App work
 
-## Pre-requisites 
+### Pre-requisites 
 1.Python3
 
 2.Requirements pip install -r requirements.txt
 
 
-## Creating and configuring the Bot
+### Creating and configuring the Bot
 
 #### 1.Create a bot in WebEx Team's Site
 https://developer.webex.com/bots.html
@@ -44,26 +44,26 @@ Make sure that the bearer token used in creating the webhook is the bearer token
 You’ll need to know the ‘roomId’ of the room the bot is hanging out in, and you’ll need to know your own ‘targetUrl’ (the Ngrok link etc.); you’ll also want to set the ‘resource’ to messages and the ‘event’ to created. Here’s what the Webhook should look like once it’s been created:
 	
 ```
-	{
-		"items": [
-			{
-				"id": "<Bearer-Token>",
-				"name": "botaDna",
-				"targetUrl": "http://b4bcf212.ngrok.io",
-				"resource": "messages",
-				"event": "created",
-				"orgId": "Y2lzY29zcGFyazovL3VzL09SR0FOSVpBVElPTi8xZWI2NWZkZi05NjQzLTQxN2YtOTk3NC1hZDcyY2FlMGUxMGY",
-				"createdBy": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9lZTY1ZTZiMC1kNzU2LTQxZWMtYjg3MC1hOTNkMjY3OTBhMDk",
-				"appId": "Y2lzY29zcGFyazovL3VzL0FQUExJQ0FUSU9OL0MyNzljYjMwYzAyOTE4MGJiNGJkYWViYjA2MWI3OTY1Y2RhMzliNjAyOTdjODUwM2YyNjZhYmY2NmM5OTllYzFm",
-				"ownedBy": "creator",
-				"status": "active",
-				"created": "2018-05-11T05:37:18.828Z"
-			}
-		]
-	}
+{
+  "items": [
+    {
+      "id": "<Bearer-Token>",
+      "name": "botaDna",
+      "targetUrl": "http://b4bcf212.ngrok.io",
+      "resource": "messages",
+      "event": "created",
+      "orgId": "Y2lzY29zcGFyazovL3VzL09SR0FOSVpBVElPTi8xZWI2NWZkZi05NjQzLTQxN2YtOTk3NC1hZDcyY2FlMGUxMGY",
+      "createdBy": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9lZTY1ZTZiMC1kNzU2LTQxZWMtYjg3MC1hOTNkMjY3OTBhMDk",
+      "appId": "Y2lzY29zcGFyazovL3VzL0FQUExJQ0FUSU9OL0MyNzljYjMwYzAyOTE4MGJiNGJkYWViYjA2MWI3OTY1Y2RhMzliNjAyOTdjODUwM2YyNjZhYmY2NmM5OTllYzFm",
+      "ownedBy": "creator",
+      "status": "active",
+      "created": "2018-05-11T05:37:18.828Z"
+    }
+  ]
+}
 ```
 
-## Running the Code in VSCode
+### Running the Code in VSCode
 
 #### 1.Open the VSCode DevEnv
 
@@ -77,13 +77,13 @@ pip install -r requirements.txt
 
 #### 3.Run the application using python3 to start the server
 
-```
+```copy
 cd server
 python botADna.py
 ```
 
 
-# Let's Chat in the Webex Bot (codeexchange@webex.bot)
+#### Chat in the Webex (with codeexchange@webex.bot)
 
 Common commands:
 	
