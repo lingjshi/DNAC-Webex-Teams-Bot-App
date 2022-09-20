@@ -102,7 +102,7 @@ Common commands:
 ##### logout
 	Logout of the cluster connection. Need to login again to run the commands
 
-# API Information
+### API Information
 
 APIs used in this code:
 
