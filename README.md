@@ -1,6 +1,6 @@
 # WebEx-Teams Bot Integration for DNAC
 
-[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://testing-developer.cisco.com/codeexchange/github/repo/lingjshi/DNAC-Webex-Teams-Bot-App) [![Run in VSCode](https://img.shields.io/static/v1.svg?label=DevNet&message=Run%20In%20VSCode&color=C623D8)](https://testing-developer.cisco.com/codespace/?id=devenv-vscode-base&community=true&type=vscode&GITHUB_SOURCE_REPO=https://github.com/lingjshi/DNAC-Webex-Teams-Bot-App)
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://testing-developer.cisco.com/codeexchange/github/repo/lingjshi/DNAC-Webex-Teams-Bot-App) [![Run in VSCode](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-runable-icon.svg)](https://testing-developer.cisco.com/codespace/?id=devenv-vscode-base&community=true&type=vscode&GITHUB_SOURCE_REPO=https://github.com/lingjshi/DNAC-Webex-Teams-Bot-App)
 
 This application aims to provide a simple integration of the Cisco DNA-Center APIs with Cisco WebEx-Teams's Bot.
 The Bot provides a chat like interface to give visibility into your network to run some basic commands and see the result right on the Chat Space (Desktop and Mobile Client)
