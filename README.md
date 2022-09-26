@@ -43,7 +43,7 @@ https://developer.ciscospark.com/endpoint-webhooks-post.html
 Make sure that the bearer token used in creating the webhook is the bearer token of the bot. 
 You’ll need to know the ‘roomId’ of the room the bot is hanging out in, and you’ll need to know your own ‘targetUrl’ (the Ngrok link etc.); you’ll also want to set the ‘resource’ to messages and the ‘event’ to created. Here’s what the Webhook should look like once it’s been created:
 	
-```
+```json
 {
   "items": [
     {
@@ -71,13 +71,13 @@ This code has been cloned in VSCode automatically.
 
 #### 2.Setup the dependencies in the terminal
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
 #### 3.Run the application using python3 to start the server
 
-```copy
+```bash
 cd server
 python3 botADna.py
 ```
