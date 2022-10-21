@@ -79,7 +79,7 @@ pip install -r requirements.txt
 
 ```bash
 cd server
-python3 botADna.py
+python botADna.py
 ```
 
 
